@@ -3,7 +3,11 @@ import torch
 import torch.nn as nn
 import torchvision.models as models
 from torch.autograd import Variable
-resnet50 = models.resnet50(pretrained=True)
+
+pretrained_model = torch.load('resnet50-0676ba61.pth')
+resnet50 = models.resnet50(pretrained=False)
+resnet50.load_state_dict(pretrained_model, strict=False)
+
 modules=list(resnet50.children())[:-1]
 resnet50=nn.Sequential(*modules)
 for p in resnet50.parameters():
